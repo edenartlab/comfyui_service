@@ -13,7 +13,7 @@ import websocket
 from timeit import default_timer as timer
 from urllib.error import URLError
 
-from configs import prepare_args, Endpoint
+from .configs import prepare_args, Endpoint
 
 
 class ComfyUI:
