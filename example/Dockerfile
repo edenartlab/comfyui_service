@@ -35,7 +35,7 @@ COPY downloads.json /root/downloads.json
 
 # # Run the install script
 RUN comfyui_service install \
-    --endpoint-file /root/example_endpoints/txt2img.json \
+    --endpoint /root/example_endpoints/txt2img.json \
     --workflow /root/example_workflows/txtimg.json \
     --downloads /root/downloads.json \
     --comfyui-home /root/ComfyUI

@@ -19,8 +19,8 @@ def main():
 
     # Subparser for the run command
     run_parser = subparsers.add_parser('run', help='Run a specific workflow')
-    run_parser.add_argument('--workflow-file', type=str, required=True, help='Path to the workflow JSON file')
-    run_parser.add_argument('--endpoint-file', type=str, required=True, help='Path to the endpoint YAML file')
+    run_parser.add_argument('--workflow', type=str, required=True, help='Path to the workflow JSON file')
+    run_parser.add_argument('--endpoint', type=str, required=True, help='Path to the endpoint YAML file')
     run_parser.add_argument('--comfyui-home', type=str, default='/root/ComfyUI', help='Path to the ComfyUI home directory')
     run_parser.set_defaults(func=run_workflow)
 
@@ -42,7 +42,7 @@ def run_workflow(args):
     comfyui.setup()
     
     client_id = str(uuid.uuid4())
-    workflow_name = os.path.basename(args.workflow_file).split(".")[0]
+    workflow_name = os.path.basename(args.workflow).split(".")[0]
     
     if workflow_name == "txt2img" or workflow_name == "txt2vid_lcm":
         config = {
@@ -56,7 +56,7 @@ def run_workflow(args):
         raise Exception("Invalid workflow type provided")
 
     try:
-        result = comfyui.run_workflow(args.workflow_file, args.endpoint_file, config, client_id)
+        result = comfyui.run_workflow(args.workflow, args.endpoint, config, client_id)
         print(result)
     except Exception as e:
         print(f"An error occurred: {e}")
