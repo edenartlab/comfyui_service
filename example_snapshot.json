@@ -17,12 +17,16 @@
             "hash": "ed3403ca1a2bc5fa16561551db720417b8cab022",
             "disabled": false
         },
+        "https://github.com/Fannovel16/comfyui_controlnet_aux": {
+            "hash": "c0b33402d9cfdc01c4e0984c26e5aadfae948e05",
+            "disabled": false
+        },
         "https://github.com/ltdrdata/ComfyUI-Impact-Pack": {
             "hash": "93a451de5b06985fbb37a735183dc66dd3585a3c",
             "disabled": false
         },
-        "https://github.com/melMass/comfy_mtb": {
-            "hash": "e838c04758402250fd3464d6cd6a6f872e8cef29",
+        "https://github.com/genekogan/comfy_mtb": {
+            "hash": "f4aae8f141f9f8ecaf2e44018277d32281507af1",
             "disabled": false
         },
         "https://github.com/banodoco/steerable-motion": {
@@ -42,7 +46,7 @@
             "disabled": false
         },
         "https://github.com/edenartlab/eden_comfy_pipelines.git": {
-            "hash": "d37c5135381768099a3982a630668b32cb1dc3fd",
+            "hash": "325a5277c08cea8f47511b968e0b5522e378ac21",
             "disabled": false
         },
         "https://github.com/cubiq/ComfyUI_IPAdapter_plus": {
@@ -67,5 +71,12 @@
             "filename": "websocket_image_save.py",
             "disabled": false
         }
-    ]
+    ],
+    "downloads": {
+        "models/clip_vision/CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors":
+            "https://edenartlab-lfs.s3.amazonaws.com/comfyui/models2/clip_vision/CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors",
+        "models/ipadapter/ip-adapter-plus_sd15.safetensors":
+            "https://edenartlab-lfs.s3.amazonaws.com/comfyui/models2/ipadapter/ip-adapter-plus_sd15.safetensors"
+    }
 }
+

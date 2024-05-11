@@ -7,16 +7,13 @@ import yaml
 import shutil
 import subprocess
 import threading
+import tempfile
 import urllib.request
 import websocket
 from timeit import default_timer as timer
-from typing import Iterator, Optional, List
 from urllib.error import URLError
-from PIL import Image
 
 from configs import prepare_args, Endpoint
-
-import tempfile
 
 
 class ComfyUI:
@@ -196,7 +193,6 @@ class ComfyUI:
 
 
 
-
 def format_prompt(prompt, n_frames):
     prompt_list = prompt.split('|')
     n_frames_per_prompt = n_frames // len(prompt_list)
@@ -208,79 +204,7 @@ def format_prompt(prompt, n_frames):
 
     # Removing the last comma and newline
     formatted_prompt = formatted_prompt.rstrip(',\n')
-    print("Final prompt string:")
-    print(formatted_prompt)
+    print("Final prompt string:", formatted_prompt)
 
     return prompt_list, formatted_prompt
-
-
-# def inject_into_workflow(workflow, config):
-#     for (node_id, field, subfield), value in config.items():
-#         if str(node_id) in workflow:
-#             if field in workflow[str(node_id)]:
-#                 workflow[str(node_id)][field][subfield] = value
-#             else:
-#                 workflow[str(node_id)][field] = {subfield: value}
-#         else:
-#             workflow[str(node_id)] = {field: {subfield: value}}
-#     return workflow
-
-
-# def prepare_workflow_args(parameters, args):
-#     workflow_args = {}
-#     for param in parameters:
-#         key = param['name']
-
-#         if 'comfyui' not in param:
-#             continue
-
-#         node_id = param['comfyui']['node_id']
-#         field = param['comfyui']['field']
-#         subfield = param['comfyui']['subfield']
-#         preprocess = param['comfyui'].get('preprocessing', None)
-        
-#         if key in args:
-#             value = args[key]
-#         else:
-#             value = param.get('default')
-
-#         if preprocess is not None:
-#             if preprocess == "csv":
-#                 value = ",".join(value)
-
-#         print("THE VALUE!", value)
-
-#         if key == "seed" and value is None:
-#             value = random.randint(0, int(1e16))
-        
-#         if value is None:
-#             continue
-        
-#         if 'required' in param and param['required'] and key not in args:
-#             raise ValueError(f"Required argument '{key}' is missing")
-        
-#         if 'allowed_values' in param:
-#             if value not in param['allowed_values']:
-#                 raise ValueError(f"Argument '{key}' with value {value} is not allowed. Allowed values are {param['allowed_values']}")
-
-#         if 'minimum' in param and 'maximum' in param:
-#             minimum = float(param['minimum'])
-#             maximum = float(param['maximum'])
-#             if not isinstance(value, (int, float)):
-#                 raise ValueError(f"Argument '{key}' with value {value} must be a number")                
-#             if not (minimum <= value <= maximum):
-#                 raise ValueError(f"Argument '{key}' with value {value} must be between {minimum} and {maximum}")
-            
-#         workflow_args[(node_id, field, subfield)] = value
-
-#     for arg in workflow_args:
-#         if arg not in [param['name'] for param in parameters]:
-#             print(f"Warning: Provided argument '{arg}' is not recognized and will be ignored.")
-
-#     return workflow_args
-
-
-
-
-
 
