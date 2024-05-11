@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+name = "comfyui_service"
+version = "0.0.1"
+description = "A description of your package"
+author = "Eden.art"
+author_email = "gene@eden.art"
+
+[tool.setuptools.packages]
+find_namespace = [
+    "comfyui_service",
+]
