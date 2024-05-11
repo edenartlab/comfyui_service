@@ -90,8 +90,8 @@ def validate_type(key, value, type):
         raise ValueError(f"Argument '{key}' must be a {type}")
 
 
-def prepare_args(endpoint_name, config, save_files=False):
-    endpoint_file = f"./endpoints/{endpoint_name}.yaml"
+def prepare_args(endpoint_file, config, save_files=False):
+    #endpoint_file = f"./endpoints/{endpoint_name}.yaml"
     print("OPENING FILE", endpoint_file)
     # check if its there
     if not os.path.exists(endpoint_file):

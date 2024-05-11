@@ -28,8 +28,11 @@ else:
     raise Exception("Invalid workflow")
 
 try:
+    endpoint_file = f"./example_endpoints/{args.workflow}.yaml"
+    workflow_file = f"./example_workflows/{args.workflow}.json"
     result = comfyui.run_workflow(
-        args.workflow, 
+        workflow_file,
+        endpoint_file,
         config, 
         client_id
     )

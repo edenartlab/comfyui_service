@@ -30,25 +30,23 @@ class ComfyUI:
         self.id = uuid.uuid4()
         self.t0 = timer()
 
-    def run_workflow(self, workflow_name, config, client_id=None):
+    def run_workflow(self, workflow_file, endpoint_file, config, client_id=None):
         if client_id is None:
             client_id = str(uuid.uuid4())
 
         self.temp_files_dir = tempfile.mkdtemp()
 
-        workflow_file = f"./workflows/{workflow_name}.json"
         with open(workflow_file, 'r') as file:
             workflow = json.load(file)
-
-        endpoint_file = f"./endpoints/{workflow_name}.yaml"
+        
         with open(endpoint_file, 'r') as file:
             endpoint = yaml.safe_load(file)
             output_node_id = str(endpoint["comfyui_output_node_id"])
 
-        args = prepare_args(workflow_name, config, save_files=True)
+        args = prepare_args(endpoint_file, config, save_files=True)
         print("COMFYUI ARGS")
         print(args)
-        workflow = self.inject_args_into_workflow(workflow_name, args)
+        workflow = self.inject_args_into_workflow(endpoint_file, workflow_file, args)
         print("WORKFLOW")
         print(workflow)
         outputs = self.get_outputs(workflow, client_id)
@@ -64,9 +62,9 @@ class ComfyUI:
         return outputs
     
         
-    def inject_args_into_workflow(self, endpoint_name, args):
-        endpoint_file = f"./endpoints/{endpoint_name}.yaml"
-        workflow_file = f"./workflows/{endpoint_name}.json"
+    def inject_args_into_workflow(self, endpoint_file, workflow_file, args):
+        #endpoint_file = f"./endpoints/{endpoint_name}.yaml"
+        #workflow_file = f"./workflows/{endpoint_name}.json"
 
         with open(endpoint_file, 'r') as file:
             endpoint = Endpoint(**yaml.safe_load(file))
