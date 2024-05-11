@@ -7,3 +7,17 @@ name = "comfyui_service"
 version = "0.0.1"
 description = "A description of your package"
 authors = [{name = "Eden.art", email = "gene@eden.art"}]
+dependencies = [
+    "httpx", 
+    "requests", 
+    "PyYAML", 
+    "tqdm", 
+    "websocket-client", 
+    "gitpython", 
+    "python-dotenv",
+    "python-magic",
+    "pydantic"
+]
+
+[project.scripts]
+comfyui_service = "comfyui_service.cli:main"
