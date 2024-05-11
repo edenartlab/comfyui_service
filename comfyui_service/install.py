@@ -20,35 +20,34 @@ def setup_comfyui(snapshot_path, comfyui_home):
     with open(snapshot_path, 'r') as f:
         snapshot = json.load(f)
     
-    comfyui_hash = snapshot["git_comfyui"]
+    comfyui_hash = snapshot["comfyui"]
 
     comfyui_repo = "https://github.com/comfyanonymous/ComfyUI"
     if not os.path.exists(comfyui_home):
         os.makedirs(comfyui_home)
-
-    repo = Repo.init(comfyui_home)
-    origin = repo.create_remote("origin", comfyui_repo)
-    origin.fetch()
-    repo.git.checkout(comfyui_hash)
+        repo = Repo.init(comfyui_home)
+        origin = repo.create_remote("origin", comfyui_repo)
+        origin.fetch()
+        repo.git.checkout(comfyui_hash)
 
     requirements_path = os.path.join(comfyui_home, "requirements.txt")
 
-    extra_requirements = [
-        "httpx", 
-        "requests", 
-        "PyYAML", 
-        "tqdm", 
-        "websocket-client", 
-        "gitpython", 
-        "python-dotenv",
-        "python-magic",
-        "pydantic"
-    ]
+    # extra_requirements = [
+    #     "httpx", 
+    #     "requests", 
+    #     "PyYAML", 
+    #     "tqdm", 
+    #     "websocket-client", 
+    #     "gitpython", 
+    #     "python-dotenv",
+    #     "python-magic",
+    #     "pydantic"
+    # ]
 
     subprocess.run(["pip", "install", "xformers!=0.0.18", "-r", requirements_path, "--extra-index-url", "https://download.pytorch.org/whl/cu121"], check=True)
-    subprocess.run(["pip", "install", *extra_requirements], check=True)
+    # subprocess.run(["pip", "install", *extra_requirements], check=True)
 
-    install_nodes(snapshot, comfyui_home)
+    install_nodes(snapshot_path, comfyui_home)
 
 
 def clone_and_install(repo_url, hash, clone_to="repo_dir", retries=5):
