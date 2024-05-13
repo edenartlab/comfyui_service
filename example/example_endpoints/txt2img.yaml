@@ -1,12 +1,12 @@
 name: Text to Image
 description: Generate an image from text
+tip: This is the most basic and common function which generates an image from text a prompt
 comfyui_output_node_id: 9
 parameters:
 - name: prompt
   label: Prompt
   description: Text prompt
   type: string
-  required: true
   comfyui: 
     node_id: 6
     field: inputs
@@ -16,7 +16,6 @@ parameters:
   description: Negative text prompt, what you do *not* want to generate
   type: string
   default: ugly, watermark, low-quality, signature, padding, margins, blurry, jpeg artifacts, poorly drawn, low-resolution, bad
-  optional: true
   comfyui: 
     node_id: 7
     field: inputs
