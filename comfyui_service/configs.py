@@ -9,16 +9,23 @@ from typing import Optional, List, Any
 
 
 class ParameterType(str, Enum):
-    BOOL = "bool"
+    BOOL = "boolean"
     INT = "int"
     FLOAT = "float"
     STRING = "string"
-    FILE = "file"
-    BOOL_ARRAY = "bool[]"
+    IMAGE = "image"
+    VIDEO = "video"
+    AUDIO = "audio"
+    ZIP = "zip"
+    BOOL_ARRAY = "boolean[]"
     INT_ARRAY = "int[]"
     FLOAT_ARRAY = "float[]"
     STRING_ARRAY = "string[]"
-    FILE_ARRAY = "file[]"
+    IMAGE_ARRAY = "image[]"
+    VIDEO_ARRAY = "video[]"
+    AUDIO_ARRAY = "audio[]"
+    ZIP_ARRAY = "zip[]"
+
 
 class ComfyUIInfo(BaseModel):
     node_id: int
@@ -78,65 +85,53 @@ def validate_type(key, value, type):
         ParameterType.INT: lambda v: isinstance(v, int),
         ParameterType.FLOAT: lambda v: isinstance(v, float),
         ParameterType.STRING: lambda v: isinstance(v, str),
-        ParameterType.FILE: lambda v: isinstance(v, str),
+        ParameterType.IMAGE: lambda v: isinstance(v, str),
+        ParameterType.VIDEO: lambda v: isinstance(v, str),
+        ParameterType.AUDIO: lambda v: isinstance(v, str),
+        ParameterType.ZIP: lambda v: isinstance(v, str),
         ParameterType.BOOL_ARRAY: lambda v: isinstance(v, list) and all(isinstance(i, bool) for i in v),
         ParameterType.INT_ARRAY: lambda v: isinstance(v, list) and all(isinstance(i, int) for i in v),
         ParameterType.FLOAT_ARRAY: lambda v: isinstance(v, list) and all(isinstance(i, float) for i in v),
         ParameterType.STRING_ARRAY: lambda v: isinstance(v, list) and all(isinstance(i, str) for i in v),
-        ParameterType.FILE_ARRAY: lambda v: isinstance(v, list) and all(isinstance(i, str) for i in v),
+        ParameterType.IMAGE_ARRAY: lambda v: isinstance(v, list) and all(isinstance(i, str) for i in v),
+        ParameterType.VIDEO_ARRAY: lambda v: isinstance(v, list) and all(isinstance(i, str) for i in v),
+        ParameterType.AUDIO_ARRAY: lambda v: isinstance(v, list) and all(isinstance(i, str) for i in v),
+        ParameterType.ZIP_ARRAY: lambda v: isinstance(v, list) and all(isinstance(i, str) for i in v),
     }
     if not type_validators[type](value):
-        print("THE TYPE DID NO T VALIDATE   "  , type, value)
         raise ValueError(f"Argument '{key}' must be a {type}")
 
 
 def prepare_args(endpoint_file, config, save_files=False):
-    #endpoint_file = f"./endpoints/{endpoint_name}.yaml"
-    print("OPENING FILE", endpoint_file)
-    # check if its there
     if not os.path.exists(endpoint_file):
-        print("ERR!!!OR: Endpoint file not found", endpoint_file)
+        raise ValueError(f"Endpoint file not found: {endpoint_file}")
     with open(endpoint_file, 'r') as file:
-        print(" ==> OPEN FILE", endpoint_file)
-        zz = yaml.safe_load(file)
-        print(zz)
-        print("ok,...")
-
-        endpoint = Endpoint(**zz)
-        print("END OOHITS IS OPEN")
-        print(endpoint)
+        data = yaml.safe_load(file)
+        endpoint = Endpoint(**data)
 
     args = {}
     for param in endpoint.parameters:
-        print("$$$$ the param is", param)
         key = param.name
-        print("!!!! the key is", key)
-        # set default value, then overwrite
         value = None
         if param.default is not None:
             value = param.default
         if config.get(key) is not None:
             value = config[key]
 
-        print("ABCD!EEEFF", value)
         if value == "random":
-            print("GET RANDOM")
             value = random.randint(param.minimum, param.maximum)
 
         if param.required and value is None:
             raise ValueError(f"Required argument '{key}' is missing")
 
         print("the value is", value)
-        # validate the type
         validate_type(key, value, param.type)
             
         # save files if required
-        if param.type == ParameterType.FILE_ARRAY and save_files:
+        if param.type == ParameterType.IMAGE_ARRAY and save_files:
             value = [save_file(v) for v in value]
-        elif param.type == ParameterType.FILE and save_files:
+        elif param.type == ParameterType.IMAGE and save_files:
             value = save_file(value)
-
-        print("the valu eis now", value)
 
         # set args value
         args[key] = value

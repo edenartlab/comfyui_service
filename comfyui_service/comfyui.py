@@ -44,11 +44,7 @@ class ComfyUI:
             output_node_id = str(endpoint["comfyui_output_node_id"])
 
         args = prepare_args(endpoint_file, config, save_files=True)
-        print("COMFYUI ARGS")
-        print(args)
         workflow = self.inject_args_into_workflow(endpoint_file, workflow_file, args)
-        print("WORKFLOW")
-        print(workflow)
         outputs = self.get_outputs(workflow, client_id)
 
         if output_node_id not in outputs: 
@@ -63,9 +59,6 @@ class ComfyUI:
     
         
     def inject_args_into_workflow(self, endpoint_file, workflow_file, args):
-        #endpoint_file = f"./endpoints/{endpoint_name}.yaml"
-        #workflow_file = f"./workflows/{endpoint_name}.json"
-
         with open(endpoint_file, 'r') as file:
             endpoint = Endpoint(**yaml.safe_load(file))
 
@@ -82,11 +75,7 @@ class ComfyUI:
             if value is None:
                 continue
 
-            print("THE VALUE IS 1111")
-            print(value)
-
             if comfyui.preprocessing is not None:
-                print("PREPROCESSING", comfyui.preprocessing)
                 if comfyui.preprocessing == "csv":
                     value = ",".join(value)
 
@@ -100,12 +89,6 @@ class ComfyUI:
                     else:
                         shutil.move(value, temp_subfolder)
                     value = temp_subfolder
-                    print("THE VALUE IS 3333")
-                    print(value)
-
-            print("THE VALUE IS 2222"    )
-            print(value)
-
 
             node_id, field, subfield = str(comfyui.node_id), comfyui.field, comfyui.subfield
             workflow[node_id][field][subfield] = value

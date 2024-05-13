@@ -6,7 +6,7 @@ parameters:
   label: Image
   description: Keyframe images to interpolate video through
   required: true
-  type: file
+  type: image
   media_upload: image/png, image/jpeg, image/webp
   comfyui: 
     node_id: 440
