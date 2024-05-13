@@ -52,6 +52,14 @@ def run_workflow(args):
         config = {
             "image": "https://d14i3advvh2bvd.cloudfront.net/7f5d44ba6f4f2ab760a9315fd3907f421f1b077e81f737b5a49b6429475442a4.jpg"
         }
+    elif workflow_name == "steerable_motion":
+        config = {
+            "images": [
+                "https://d14i3advvh2bvd.cloudfront.net/156856cb0e2a0bf3f84fb795997a36fbae42efc1d863b3d87c7e0cfbf8f9dab4.jpg",
+                "https://d14i3advvh2bvd.cloudfront.net/7f5d44ba6f4f2ab760a9315fd3907f421f1b077e81f737b5a49b6429475442a4.jpg",
+                "https://d14i3advvh2bvd.cloudfront.net/768d95806f8086f99dec3c20b945df5e9a7c2c09dd8d5cd4571b9685859da649.jpg"
+            ]
+        }                       
     else:
         raise Exception("Invalid workflow type provided")
 
