@@ -41,4 +41,4 @@ RUN comfyui_service install \
     --comfyui-home /root/ComfyUI
 
 # Setup server to catch any leftover dependencies/downloads
-# #RUN comfyui_service run --endpoint-file /root/example_endpoints/txt2img.json --workflow-file /root/example_workflows/txtimg.json --comfyui-home /root/ComfyUI
+# #RUN comfyui_service run --endpoint /root/comfyui_service/example/example_endpoints/txt2img.yaml --workflow /root/comfyui_service/example/example_workflows/txt2img.json --comfyui-home /root/ComfyUI
