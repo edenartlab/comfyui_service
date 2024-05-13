@@ -32,20 +32,7 @@ def setup_comfyui(snapshot_path, comfyui_home):
 
     requirements_path = os.path.join(comfyui_home, "requirements.txt")
 
-    # extra_requirements = [
-    #     "httpx", 
-    #     "requests", 
-    #     "PyYAML", 
-    #     "tqdm", 
-    #     "websocket-client", 
-    #     "gitpython", 
-    #     "python-dotenv",
-    #     "python-magic",
-    #     "pydantic"
-    # ]
-
     subprocess.run(["pip", "install", "xformers!=0.0.18", "-r", requirements_path, "--extra-index-url", "https://download.pytorch.org/whl/cu121"], check=True)
-    # subprocess.run(["pip", "install", *extra_requirements], check=True)
 
     install_nodes(snapshot_path, comfyui_home)
 

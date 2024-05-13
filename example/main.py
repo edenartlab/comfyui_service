@@ -5,8 +5,8 @@ from comfyui_service import ComfyUI
 
 def main():
     parser = argparse.ArgumentParser(description='Run a specific workflow')
-    parser.add_argument('--workflow-file', type=str, required=True, help='Path to the workflow file')
-    parser.add_argument('--endpoint-file', type=str, required=True, help='Path to the endpoint file')
+    parser.add_argument('--workflow', type=str, required=True, help='Path to the workflow file')
+    parser.add_argument('--endpoint', type=str, required=True, help='Path to the endpoint file')
 
     args = parser.parse_args()
 
@@ -30,10 +30,12 @@ def main():
 
     try:
         result = comfyui.run_workflow(
-            args.endpoint_file,
-            args.workflow_name,
+            args.workflow,
+            args.endpoint,
             config,
             client_id
+
+            workflow_file, endpoint_file, config, client_id
         )
         print(result)
 
