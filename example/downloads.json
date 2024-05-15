@@ -19,6 +19,8 @@
         "https://edenartlab-lfs.s3.amazonaws.com/comfyui/models2/controlnet/v3_sd15_sparsectrl_rgb.ckpt",
     "models/controlnet/v3_sd15_sparsectrl_scribble.ckpt":
         "https://edenartlab-lfs.s3.amazonaws.com/comfyui/models2/controlnet/v3_sd15_sparsectrl_scribble.ckpt",
+    "models/controlnet/controlnet_checkpoint.ckpt":
+        "https://edenartlab-lfs.s3.amazonaws.com/comfyui/models2/controlnet/controlnet_checkpoint.ckpt",
     "models/ipadapter/ip-adapter-plus_sd15.safetensors":
         "https://edenartlab-lfs.s3.amazonaws.com/comfyui/models2/ipadapter/ip-adapter-plus_sd15.safetensors",
     "models/loras/v3_sd15_adapter.ckpt":
