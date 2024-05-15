@@ -27,11 +27,16 @@ class ParameterType(str, Enum):
     ZIP_ARRAY = "zip[]"
 
 
+FILE_TYPES = [ParameterType.IMAGE, ParameterType.VIDEO, ParameterType.AUDIO, ParameterType.ZIP]
+FILE_ARRAY_TYPES = [ParameterType.IMAGE_ARRAY, ParameterType.VIDEO_ARRAY, ParameterType.AUDIO_ARRAY, ParameterType.ZIP_ARRAY]
+
+
 class ComfyUIInfo(BaseModel):
     node_id: int
     field: str
     subfield: str
     preprocessing: Optional[str] = None
+
 
 class EndpointParameter(BaseModel):
     name: str
@@ -41,12 +46,13 @@ class EndpointParameter(BaseModel):
     type: ParameterType
     media_upload: Optional[str] = Field(None)
     default: Optional[Any] = Field(None)
-    minimum: Optional[int] = Field(None)
-    maximum: Optional[int] = Field(None)
+    minimum: Optional[float] = Field(None)
+    maximum: Optional[float] = Field(None)
     min_length: Optional[int] = Field(None)
     max_length: Optional[int] = Field(None)
     options: Optional[List[Any]] = Field(None)
     comfyui: Optional[ComfyUIInfo] = Field(None)
+
 
 class Endpoint(BaseModel):
     name: str
@@ -124,17 +130,15 @@ def prepare_args(endpoint_file, config, save_files=False):
         if param.required and value is None:
             raise ValueError(f"Required argument '{key}' is missing")
 
-        print("the value is", value)
         validate_type(key, value, param.type)
             
         # save files if required
-        if param.type == ParameterType.IMAGE_ARRAY and save_files:
-            value = [save_file(v) for v in value]
-        elif param.type == ParameterType.IMAGE and save_files:
+        if param.type in FILE_TYPES and save_files:
             value = save_file(value)
+        elif param.type in FILE_ARRAY_TYPES and save_files:
+            value = [save_file(v) for v in value]
 
         # set args value
         args[key] = value
         
     return args
-
