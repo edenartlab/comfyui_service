@@ -1,13 +1,12 @@
 name: Image to Video
 description: Create a video from a single image
+tip: This will animate the image
 comfyui_output_node_id: 466
 parameters:
 - name: image
   label: Image
   description: Keyframe images to interpolate video through
-  required: true
   type: image
-  media_upload: image/png, image/jpeg, image/webp
   comfyui: 
     node_id: 440
     field: inputs

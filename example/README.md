@@ -1,12 +1,12 @@
 ### Example of comfyui_service
 
-Build the image:
+Build the docker image based on a single workflow.
 
-    docker build -t comfyui .
+    docker build --build-arg WORKFLOW=txt2img -t comfyui_txt2img .
 
 Run a shell inside a container with GPU support:
 
-    docker run --gpus all -it comfyui bash
+    docker run --gpus all -it comfyui_txt2img bash
 
 From the shell, run a job:
 
@@ -32,3 +32,13 @@ result = comfyui.run_workflow(
 
 comfyui.stop_server()
 ```
+
+# Test
+
+To test a workflow is, just combine the above steps to run a job:
+
+    docker run --gpus all -it comfyui_txt2img bash -c "\
+        comfyui_service run \
+        --endpoint /root/endpoints/txt2img.yaml \
+        --workflow /root/workflows/txt2img.json \
+        --comfyui-home /root/ComfyUI"

@@ -51,7 +51,6 @@ parameters:
   default: random
   minimum: 0
   maximum: 10000000000000000
-  optional: true
   comfyui: 
     node_id: 3
     field: inputs
