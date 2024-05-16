@@ -12,7 +12,6 @@ from pathlib import Path
 from git import Repo, GitCommandError
 
 
-
 def setup_comfyui(snapshot_path, comfyui_home):
     if not os.path.exists(snapshot_path):
         print(f"Error: Snapshot file {snapshot_path} does not exist")
@@ -38,7 +37,7 @@ def setup_comfyui(snapshot_path, comfyui_home):
 
 
 def clone_and_install(repo_url, hash, clone_to="repo_dir", retries=5):
-    print("\n\n\n====== Installing", repo_url, hash, clone_to)
+    print("\n====== Installing", repo_url, hash, clone_to)
     for t in range(retries):        
         try:
             if os.path.exists(clone_to):
@@ -69,18 +68,6 @@ def clone_and_install(repo_url, hash, clone_to="repo_dir", retries=5):
                         print(f"Error installing requirements: {e.stderr}")
         except Exception as e:
             print(f"Error installing requirements for {root}: {e}")
-
-    # Try to run __init__.py for node
-    # try:
-    #     repo_name = repo_url.split("/")[-1].replace(".git", "")
-    #     repo_init = f"{clone_to}/__init__.py"
-    #     spec = importlib.util.spec_from_file_location(repo_name, repo_init)
-    #     module = importlib.util.module_from_spec(spec)
-    #     sys.modules[repo_name] = module
-    #     spec.loader.exec_module(module)
-
-    # except Exception as e:
-    #     print(f"Error running __init__.py for {root}: {e}")
 
 
 def download_models(downloads, comfyui_home):

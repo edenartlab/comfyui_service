@@ -5,6 +5,7 @@ import uuid
 from .comfyui import ComfyUI
 from .install import generate_download_dict, setup_comfyui, download_models
 
+
 def main():
     parser = argparse.ArgumentParser(description="ComfyUI Service Tool")
     subparsers = parser.add_subparsers(dest="command", required=True, help="Subcommands")
@@ -54,7 +55,7 @@ def run_workflow(args):
         }
     elif workflow_name == "vid2vid":
         config = {
-            "image":"https://d14i3advvh2bvd.cloudfront.net/156856cb0e2a0bf3f84fb795997a36fbae42efc1d863b3d87c7e0cfbf8f9dab4.jpg",
+            "image": "https://d14i3advvh2bvd.cloudfront.net/156856cb0e2a0bf3f84fb795997a36fbae42efc1d863b3d87c7e0cfbf8f9dab4.jpg",
             "video": "https://edenartlab-stage-data.s3.amazonaws.com/b09ed23211a88017430bd687b1989dcd41f18222343fcd8f133f7cda489100b0.mp4"   
         }                       
     else:
