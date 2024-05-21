@@ -9,7 +9,7 @@ from typing import Optional, List, Any
 
 
 class ParameterType(str, Enum):
-    BOOL = "boolean"
+    BOOL = "bool"
     INT = "int"
     FLOAT = "float"
     STRING = "string"
@@ -17,7 +17,7 @@ class ParameterType(str, Enum):
     VIDEO = "video"
     AUDIO = "audio"
     ZIP = "zip"
-    BOOL_ARRAY = "boolean[]"
+    BOOL_ARRAY = "bool[]"
     INT_ARRAY = "int[]"
     FLOAT_ARRAY = "float[]"
     STRING_ARRAY = "string[]"

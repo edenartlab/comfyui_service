@@ -20,6 +20,14 @@ RUN comfyui_service install \
     --downloads /root/snapshots/_downloads.json \
     --comfyui-home /root/ComfyUI
 
+# For Development
+# COPY .. /root/comfyui_service
+# RUN pip uninstall -y comfyui_service
+# WORKDIR /root/comfyui_service
+# RUN pip install -e .
+# WORKDIR /root
+
+
 # Setup server to catch any leftover dependencies/downloads
 # RUN comfyui_service run \
 #     --endpoint /root/endpoints/${WORKFLOW}.yaml \

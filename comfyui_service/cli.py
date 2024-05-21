@@ -39,12 +39,15 @@ def install_command(args):
 
 
 def run_workflow(args):
+    print("Running workflow...")
     comfyui = ComfyUI(comfyui_root=args.comfyui_home)
     comfyui.setup()
     
     client_id = str(uuid.uuid4())
     workflow_name = os.path.basename(args.workflow).split(".")[0]
     
+    print("WORKFLOW NAME:", workflow_name)
+
     if workflow_name == "txt2img" or workflow_name == "txt2vid_lcm":
         config = {
             "prompt": "A cat and a dog eating a pizza"
@@ -58,9 +61,18 @@ def run_workflow(args):
             "image": "https://d14i3advvh2bvd.cloudfront.net/156856cb0e2a0bf3f84fb795997a36fbae42efc1d863b3d87c7e0cfbf8f9dab4.jpg",
             "video": "https://edenartlab-stage-data.s3.amazonaws.com/b09ed23211a88017430bd687b1989dcd41f18222343fcd8f133f7cda489100b0.mp4"   
         }                       
+    elif workflow_name == "style_mixing":
+        config = {
+            "images": [
+                "https://d14i3advvh2bvd.cloudfront.net/7f5d44ba6f4f2ab760a9315fd3907f421f1b077e81f737b5a49b6429475442a4.jpg",
+                "https://d14i3advvh2bvd.cloudfront.net/156856cb0e2a0bf3f84fb795997a36fbae42efc1d863b3d87c7e0cfbf8f9dab4.jpg"
+            ]
+        }
     else:
         raise Exception("Invalid workflow type provided")
 
+
+    print("THE CONFIG IS:", config)
     try:
         result = comfyui.run_workflow(args.workflow, args.endpoint, config, client_id)
         print(result)

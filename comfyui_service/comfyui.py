@@ -31,31 +31,36 @@ class ComfyUI:
         self.t0 = timer()
 
     def run_workflow(self, workflow_file, endpoint_file, config, client_id=None):
-        if client_id is None:
-            client_id = str(uuid.uuid4())
+        try:
+            if client_id is None:
+                client_id = str(uuid.uuid4())
 
-        self.temp_files_dir = tempfile.mkdtemp()
+            self.temp_files_dir = tempfile.mkdtemp()
 
-        with open(workflow_file, 'r') as file:
-            workflow = json.load(file)
+            with open(workflow_file, 'r') as file:
+                workflow = json.load(file)
+            
+            with open(endpoint_file, 'r') as file:
+                endpoint = yaml.safe_load(file)
+                output_node_id = str(endpoint["comfyui_output_node_id"])
+
+            args = prepare_args(endpoint_file, config, save_files=True)
+            workflow = self.inject_args_into_workflow(endpoint_file, workflow_file, args)
+            outputs = self.get_outputs(workflow, client_id)
+
+            if output_node_id not in outputs: 
+                print("No output found for node id", output_node_id)
+
+            outputs = outputs[output_node_id]
+
+            # clean up
+            shutil.rmtree(self.temp_files_dir)
+
+            return outputs
         
-        with open(endpoint_file, 'r') as file:
-            endpoint = yaml.safe_load(file)
-            output_node_id = str(endpoint["comfyui_output_node_id"])
-
-        args = prepare_args(endpoint_file, config, save_files=True)
-        workflow = self.inject_args_into_workflow(endpoint_file, workflow_file, args)
-        outputs = self.get_outputs(workflow, client_id)
-
-        if output_node_id not in outputs: 
-            print("No output found for node id", output_node_id)
-
-        outputs = outputs[output_node_id]
-
-        # clean up
-        shutil.rmtree(self.temp_files_dir)
-
-        return outputs
+        except Exception as e:
+            print("Error running workflow:", e)
+            return {"error": str(e)}
     
         
     def inject_args_into_workflow(self, endpoint_file, workflow_file, args):
