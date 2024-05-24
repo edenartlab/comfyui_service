@@ -35,6 +35,13 @@ def setup_comfyui(snapshot_path, comfyui_home):
 
     install_nodes(snapshot_path, comfyui_home)
 
+    post_install_commands = snapshot.get("post_install_commands")
+    print("POST INSTALL COMMANDS:", post_install_commands)
+    if post_install_commands:
+        for command in post_install_commands:
+            print(f"Running post install command: {command}")
+            subprocess.run(command, check=True)
+
 
 def clone_and_install(repo_url, hash, clone_to="repo_dir", retries=5):
     print("\n====== Installing", repo_url, hash, clone_to)
@@ -62,7 +69,6 @@ def clone_and_install(repo_url, hash, clone_to="repo_dir", retries=5):
                 if file.startswith("requirements") and file.endswith((".txt", ".pip")):
                     try:
                         requirements_path = os.path.join(root, file)
-                        print(f" --- Installing requirements from {requirements_path}")
                         subprocess.run(["pip", "install", "-r", requirements_path], check=True)
                     except subprocess.CalledProcessError as e:
                         print(f"Error installing requirements: {e.stderr}")
