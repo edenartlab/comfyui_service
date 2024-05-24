@@ -40,7 +40,7 @@ def setup_comfyui(snapshot_path, comfyui_home):
     if post_install_commands:
         for command in post_install_commands:
             print(f"Running post install command: {command}")
-            subprocess.run(command, check=True)
+            os.system(command)
 
 
 def clone_and_install(repo_url, hash, clone_to="repo_dir", retries=5):
